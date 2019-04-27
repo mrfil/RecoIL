@@ -1,0 +1,49 @@
+*.jpg
+*.png 
+html/
+##---------------------------------------------------
+## MATLAB Specific .gitignore stuff!
+##---------------------------------------------------
+# Windows default autosave extension
+*.asv
+# OSX / *nix default autosave extension
+*.m~
+# Compiled MEX binaries (all platforms)
+#*.mex*
+# Simulink Code Generation
+slprj/
+*.mat
+
+##---------------------------------------------------
+## OSX Specific .gitignore stuff!
+##---------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+# Icon must end with two \r
+Icon
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+##---------------------------------------------------
+## Nextflow stuff
+##---------------------------------------------------
+.nextflow
+.nextflow.log
+.nextflow.log.*
+
+##---------------------------------------------------
+## SpinVeyor/MATLAB stuff
+##---------------------------------------------------
+SpinVeyor/work
