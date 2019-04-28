@@ -47,3 +47,10 @@ Temporary Items
 ## SpinVeyor/MATLAB stuff
 ##---------------------------------------------------
 SpinVeyor/work
+
+##---------------------------------------------------
+## Python/Sphinx stuff
+##---------------------------------------------------
+env
+# sphinx build folder
+_build
