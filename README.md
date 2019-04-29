@@ -1,39 +1,33 @@
-$project
+![](https://github.com/acerjanic/RecoIL/blob/master/Logo.png | width=640)
+
+RecoIL 
 ========
 
-$project will solve your problem of where to start with documentation,
-by providing a basic explanation of how to do it easily.
-
-Look how easy it is to use:
-
-    import project
-    # Get your stuff done
-    project.do_stuff()
+Tools for prototyping non-Cartesian MR image reconstruction
+-----------------------------------------------------------
+    
 
 Features
 --------
 
-- Be awesome
-- Make things faster
 
 Installation
 ------------
 
-Install $project by running:
+Install RecoIL by running:
 
-    install project
 
 Contribute
 ----------
 
-- Issue Tracker: github.com/mrfil/$project/issues
-- Source Code: github.com/mrfil/$project
+- Issue Tracker: github.com/mrfil/recoil/issues
+- Source Code: github.com/mrfil/recoil
 
 Support
 -------
 
 If you are having issues, please let us know.
-We have a mailing list located at: project@google-groups.com
+We have a mailing list located at: 
 
 License
 -------
