@@ -1,0 +1,6 @@
+function o = subsref(a, arg, arg2)
+     %arg2 = '1','2','3'
+
+	if arg.type == '.'
+		eval(sprintf('o = a%s.%s;',arg2, arg.subs))
+	end
