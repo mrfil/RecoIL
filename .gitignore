@@ -1,5 +1,6 @@
 *.jpg
 *.png 
+!Logo.png
 html/
 ##---------------------------------------------------
 ## MATLAB Specific .gitignore stuff!
