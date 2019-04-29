@@ -1,4 +1,4 @@
-![](https://github.com/acerjanic/RecoIL/blob/master/Logo.png | width=640)
+![](https://github.com/acerjanic/RecoIL/blob/master/Logo.png)
 
 RecoIL 
 ========
