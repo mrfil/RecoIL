@@ -25,8 +25,8 @@ Install RecoIL by adding ```initializePaths.m``` to your MATLAB startup. You can
 Contribute
 ----------
 
-- Issue Tracker: github.com/mrfil/recoil/issues
-- Source Code: github.com/mrfil/recoil
+- Issue Tracker: [github.com/mrfil/recoil/issues](https://github.com/mrfil/recoil/issues)
+- Source Code: [github.com/mrfil/recoil](https://github.com/mrfil/recoil)
 
 
 Support
@@ -37,7 +37,7 @@ RecoIL has been tested with MATLAB R2017b on MacOS X and Linux. It should be com
 There are a few MEX files that may or may not be compiled correctly for Windows. YMMV.
 
 If you are having issues, please let us know!
-Please open an issue at [github.com/mrfil/recoil](https://wwww.github.com/mrfil/recoil).
+Please open an issue at [github.com/mrfil/recoil](https://github.com/mrfil/recoil).
 
 
 Acknowledgements
