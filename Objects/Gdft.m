@@ -32,7 +32,10 @@ classdef Gdft
          if nargin < 7
             obj.FM = 0;
          else
-            obj.FM = col(rot90(FM));
+            % We have an covention of y,x,z in a lot of the code so here we
+            % need to ensure the field map matches that, a 270 rotation in
+            % the xy plane should take care of that. I hope.
+            obj.FM = col(rot90(FM,3));
          end
          
          VoxelBasis = 'delta';

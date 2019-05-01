@@ -42,7 +42,7 @@ sen_map = generate_birdcage_sensitivities(Nos*N, nCoils, 1.5);
 % of coils)
 sen_map = reshape(sen_map,[],nCoils);
 
-% Generate a field map with max 100 Hz off-resonance
+% Generate a field map (in Hz) with max 100 Hz off-resonance
 FM_groundTruth = genSynthFieldMap(Nos*N,100);
 
 
@@ -52,7 +52,7 @@ FM_groundTruth = genSynthFieldMap(Nos*N,100);
 
 nShotsSenFM = 18;
 
-[kReadSenFM, kPhaseSenFM] = generateSpiral(24, N, 2.2, 120, Ts, nShotsSenFM);
+[kReadSenFM, kPhaseSenFM] = generateSpiral(24, N, 22, 120, Ts, nShotsSenFM);
 
 % Generate timing vectors on a per shot basis
 timingVecSen_SpinEcho = 0:Ts:(length(kReadSenFM(:,1))-1) * Ts;
@@ -130,7 +130,7 @@ cImages = squeeze(cImages);
 [sen, mask] = createSenMap(cImages(:,:,1,:), 2);
 sen = reshape(sen,N,N,1,1,nCoils);
 
-% Calculate a field map
+% Calculate a field map (in rads/s)
 [FM, FMImages, mask] = createFieldMap(rInfoSenFM,sen,mask,1,'nIterations',1);
 
 %% Now we can simulate a reconstruction using the results of our calibration scans.
@@ -145,7 +145,7 @@ nShots = 1;
 SNR_gre = 30;
 
 % New trajectory
-[kx, ky] = generateSpiral(24, N, 2.2, 120, Ts, Rfactor*nShots);
+[kx, ky] = generateSpiral(24, N, 22, 120, Ts, Rfactor*nShots);
 
 kRead  = kx(:,1);
 kPhase = ky(:,1);
