@@ -43,7 +43,7 @@ Please open an issue at [github.com/mrfil/recoil](https://wwww.github.com/mrfil/
 Acknowledgements
 ----------------
 
-We use the object format of the [MIRT](https://web.eecs.umich.edu/~fessler/code) as well as the NUFFT and supprot functions developed by Jeff Fessler and his students at the University of Michigan.
+We use the object format of the [MIRT](https://web.eecs.umich.edu/~fessler/code) as well as the NUFFT and support functions developed by Jeff Fessler and his students at the University of Michigan. Our ```solve_pwls_pcg.m``` is derived from ```pwls_pcg_1.m```. 
 
 The contrib directory contains a number of tools developed by others. Of note, we have incorporated Brian Hargreave's vds code for spiral generation for our starter example.
 
