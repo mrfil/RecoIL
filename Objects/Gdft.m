@@ -32,7 +32,7 @@ classdef Gdft
          if nargin < 7
             obj.FM = 0;
          else
-            obj.FM = col(FM);
+            obj.FM = col(rot90(FM));
          end
          
          VoxelBasis = 'delta';

@@ -4,6 +4,7 @@ classdef recoInfoAPI
     % Syntax:  [rInfo] = recoInfo____
     %          [rInfo] = recoInfoISMRMRD(filename);
     %          [rInfo] = recoInfoTwix(filename);
+    %          [rInfo] = recoInfoSim(kspace,data,timingVec));
     %
     % Inputs:
     %    filename - Name (and path) of raw data file

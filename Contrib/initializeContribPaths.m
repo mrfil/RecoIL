@@ -9,3 +9,6 @@ rootPathContrib = fileparts(mfilename('fullpath'));
 % Add miscelaneous single files
 addpath([ rootPathContrib '/Misc']);
 
+% Brian Hargreaves vds spiral generation code
+addpath([ rootPathContrib '/vds']);
+
