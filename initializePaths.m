@@ -26,7 +26,8 @@ addpath([ rootPath '/Routines']);
 addpath([ rootPath '/Gridding']);
 addpath([ rootPath '/Objects']);
 
-
+% Adding utilities
+addpath([ rootPath '/Utilities/PowerGrid']);
 
 % Adding all of the external tools
 % Note that we don't use genpath here to control what is added. Exactly what
