@@ -78,7 +78,7 @@ classdef Robj
             p.addOptional('dims2penalize', ones(ndims(mask),1));
             p.addOptional('potential','quad');
             % Deal with inputs here
-            p.parse();
+            p.parse(varargin{:});
             
             obj.beta = p.Results.beta;
             obj.dims2penalize = p.Results.dims2penalize;
