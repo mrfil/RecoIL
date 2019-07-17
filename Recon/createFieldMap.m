@@ -108,7 +108,8 @@ for kk = 1:nIterations % Repetition for field corrected images
             % Use FSL bet to calculate a nice brain support mask for the
             % field map. Skip the skull completely, only for field map
             % estimation.
-            mask = double(bet(abs(FMImages(:,:,:,1)),'f',.4));
+            %mask = double(bet(abs(FMImages(:,:,:,1)),'f',.4));
+            mask = double(bet(abs(FMImages(:,:,:,end)),'f',.5));
             %mask = (abs(FMImages(:,:,:,1)) > (0.1*max(abs(col(FMImages(:,:,:,1))))));
             %lastTEIndex = find(TEMask,1,'last');
             %maskSmoothing = (col(abs(FMImages(:,:,:,lastTEIndex))) > ...
