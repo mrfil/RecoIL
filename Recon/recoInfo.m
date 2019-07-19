@@ -14,9 +14,9 @@ function rInfo = recoInfo(filename, varargin)
     [filepath,name,ext] = fileparts(filenameSelected);
     switch ext
         case '.dat'
-            rInfo = recoInfoTwix(filenameSelected, varargin);
+            rInfo = recoInfoTwix(filenameSelected, varargin{:});
         case '.h5'
-            rInfo = recoInfoIsmrmrd(filenameSelected, varargin);
+            rInfo = recoInfoIsmrmrd(filenameSelected, varargin{:});
         otherwise
             error('Unrecogized filetype. recoInfo currently supports Siemens Twix (.dat) and ISMRMRD HDF5 (.h5) files.')
     end
