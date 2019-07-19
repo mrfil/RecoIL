@@ -71,19 +71,26 @@ classdef Robj
             if ~islogical(mask)
                 error 'Mask must be logical'
             end
+                        
+            beta = 1; %Default 
+            BetaValidationFcn = @(x) isnumeric(x) && isscalar(x) && (x >= 0);
+            
+            delta = 0.001; % Use a zero delta for default.
+            DeltaValidationFcn = @(x) isnumeric(x) && isscalar(x) && (x >= 0);
             
             %% Parse inputs
             p = inputParser();
-            p.addOptional('beta', 1, @(x) (x>=0));
+            p.addOptional('beta', beta, BetaValidationFcn);
             p.addOptional('dims2penalize', ones(ndims(mask),1));
             p.addOptional('potential','quad');
+            p.addOptional('delta',delta);
             % Deal with inputs here
             p.parse(varargin{:});
             
             obj.beta = p.Results.beta;
             obj.dims2penalize = p.Results.dims2penalize;
             obj.potential = p.Results.potential;
-            
+            obj.delta = p.Results.delta;
             %% Initialize object
             % Set offsets
             if ndims(mask) == 2
