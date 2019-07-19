@@ -143,7 +143,7 @@ for kk = 1:nIterations % Repetition for field corrected images
     end
 end
     %% Smooth field map over entire image, enforcing data fidelity only over the tight mask used in SENSE Map estimation
-    beta = 10;
+    beta = 1;
     niter = 1000;
     
     FMsmoothed = zeros(rInfo.N,rInfo.N,rInfo.nSlices);
@@ -153,7 +153,7 @@ end
     lastTEIndex = find(TEMask,1,'last');
     maskSmoothing = (col(abs(FMImages(:,:,:,lastTEIndex))) > (0.1*max(col(abs(FMImages(:,:,:,lastTEIndex))))));
     maskSmoothing = reshape(maskSmoothing,rInfo.N,rInfo.N,rInfo.nSlices);
-    data_weight = maskSmoothing;
+    data_weight = double(maskSmoothing);
     
     
     %     W = Gdiag(col(sos_img.*mask+~(mask_circ)*mean(sos_img(:))));

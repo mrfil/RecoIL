@@ -191,9 +191,8 @@ A = TimeSegmentation(G, col(timingVec_gre), col(FM(squeeze(mask))), L);
 
 % Setup a quadratic regularization object with Rbeta regularization
 % constant with 2d penalization.
-R = Robj(logical(squeeze(mask)), 'edge_type', 'tight', 'order', 2,...
-    'beta', Rbeta, 'type_denom', 'matlab', 'potential', 'quad',...
-    'dims2penalize', [1,1,0]);
+R = Robj(logical(squeeze(mask)),  'beta', Rbeta, ...
+         'potential', 'quad', 'dims2penalize', [1,1,0]);
 
 % Reshape the sensemap into an [N*N, nCoils] matrix
 sen_tmp = reshape(sen,[],nCoils);

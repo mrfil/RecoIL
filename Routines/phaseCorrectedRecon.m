@@ -201,9 +201,9 @@ function [img, resid, roughness] = phaseCorrectedRecon(rInfo, sen, mask, FM, PMa
                   end
                   
                   if rInfo.multibandFactor > 1
-                     R = Robj(logical(mask(:,:,:,slc)),'edge_type','tight','order',2,'beta',Rbeta,'type_denom','matlab','potential',penalty,'delta',delta,'dims2penalize',dims2penalize);
+                     R = Robj(logical(mask(:,:,:,slc)),'beta',Rbeta,'potential',penalty,'delta',delta,'dims2penalize',dims2penalize);
                   else
-                     R = Robject(logical(mask(:,:,:,slc)),'edge_type','tight','order',2,'beta',Rbeta,'type_denom','matlab','potential',penalty,'delta',delta);
+                     R = Robject(logical(mask(:,:,:,slc)),'beta',Rbeta,'potential',penalty,'delta',delta);
                   end
                   
                   sen_tmp = reshape(sen(:,:,:,slc,:),rInfo.N*rInfo.N*Nz,[]);
