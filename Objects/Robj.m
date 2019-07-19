@@ -74,7 +74,7 @@ classdef Robj
             
             %% Parse inputs
             p = inputParser();
-            p.addOptional('beta', 1, @(x) (x>0));
+            p.addOptional('beta', 1, @(x) (x>=0));
             p.addOptional('dims2penalize', ones(ndims(mask),1));
             p.addOptional('potential','quad');
             % Deal with inputs here
