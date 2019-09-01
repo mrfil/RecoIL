@@ -38,24 +38,28 @@ function[ mask, f, skull ] = bet(mag, varargin)
 %% constants
 
 DEFAULT_VOXELSIZE = [2 2 2] ;
-DEFAULT_F         = 0.3 ;
-
+DEFAULT_F         = 0.5 ;
+DEFAULT_G         = 0 ;
 %% check inputs
 
 if nargin < 1 || isempty(mag)
     error('Function requires at least 1 input.')
 end
 fValidationFcn = @(x) isscalar(x) && isnumeric(x) && (x <= 1) && (x>0);
+gValidationFcn = @(x) isscalar(x) && isnumeric(x) && (x <= 1);
 voxelSizeValidationFcn = @(x) ~isscalar(x) && (ndims(x) <= 3) && (ndims(x)>1);
+
 p = inputParser();
 
 addOptional(p,'f', DEFAULT_F,fValidationFcn);
+addOptional(p,'g', DEFAULT_G,gValidationFcn);
 addOptional(p,'VoxelSize', DEFAULT_VOXELSIZE, voxelSizeValidationFcn);
 
 parse(p,varargin{:});
 
 voxelSize = p.Results.VoxelSize;
 f = p.Results.f;
+g = p.Results.g;
 
 if nargin < 2
     disp('Default parameters will be used')
@@ -68,12 +72,12 @@ system(['mkdir ' tmpFldr]) ;
 save_nii( make_nii( mag, voxelSize ), [tmpFldr 'mag.nii'] ) ;
 
 
-betArgStr = [tmpFldr 'masked.nii -m -g 0.3 -f ' num2str(f) ] ;
+betArgStr = [tmpFldr 'masked.nii -m -g ' num2str(g) ' -f ' num2str(f) ];
 
 if nargout == 3
     betArgStr = strcat( betArgStr, ' -s ' ) ;
 end
-    
+
 system(['$FSLDIR/bin/bet ' tmpFldr 'mag.nii ' betArgStr] ) ;
 
 
