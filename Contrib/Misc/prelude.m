@@ -1,10 +1,10 @@
-function [ unwrappedPhase ] = prelude( rawPhase, mag, Options )
+function [ unwrappedPhase ] = prelude( rawPhase, mag, varargin)
 %PRELUDE 
 %
 %   PRELUDE calls FSL Prelude
 %
 %	unwrappedPhase = PRELUDE( rawPhase, mag )
-%	unwrappedPhase = PRELUDE( rawPhase, mag, Options )
+%	unwrappedPhase = PRELUDE( rawPhase, mag, ... )
 %
 %    .......................
 %
@@ -13,104 +13,74 @@ function [ unwrappedPhase ] = prelude( rawPhase, mag, Options )
 %
 %    .......................
 %   
-%   The following Option-fields are supported
+%   The following name-value pairs are supported
 %
-%        .voxelSize
+%        voxelSize
 %               default: [1 1 1]
-%
-%        .path2UnwrappedPhase 
-%               default: 'unwrappedPhase.nii' 
-%                       temporarily created in the same directory as the raw
-%                       phase input, however it is subsequently deleted
-%                       (assumption being the user wants the unwrapped phase
-%                       returned merely as a matlab array).
 %
 %        .mask
 %
 %
-%        .isUnwrappingIn2D
+%        isUnwrappingIn2D
 %                        default: true
-%
-%        .isSavingNiftis
-%                        default: false
 %
 %    .......................
 % 	topfer@ualberta.ca	2014
+%   Modified by Alex Cerjanic, acerja2@illinois.edu University of Illinois, 2019
+%		to use name-value pairs for options
+%	
 
 	DEFAULT_VOXELSIZE             = [1 1 1] ;
-	DEFAULT_PATH2UNWRAPPEDPHASE   = [ './unwrappedPhase.nii' ] ;
-	DEFAULT_ISUNWRAPPINGIN2D      = true ;
-	DEFAULT_ISSAVINGNIFTIS        = false ;
+	DEFAULT_ISUNWRAPPINGIN2D      = false ;
 
 	% check inputs
 
 	if nargin < 2 || isempty(rawPhase) || isempty(mag) 
 	    error('Function requires at least 2 input arguments.')
 	end
+	p = inputParser();
+	p.addOptional('voxelSize', DEFAULT_VOXELSIZE);
+	p.addOptional('isUnwrappingIn2D', false);
+	p.addOptional('mask',[])
+	p.parse(varargin{:});
 
-	if nargin < 3 || isempty(Options)
-	    disp('Default parameters will be used')
-	    Options.dummy = [] ;
-	end
-
-	if  ~myisfield( Options, 'voxelSize' ) || isempty(Options.voxelSize)
-	    Options.voxelSize = DEFAULT_VOXELSIZE ;
-	end
-
-	if  ~myisfield( Options, 'path2UnwrappedPhase' ) || isempty(Options.path2UnwrappedPhase)
-		isSavingUnwrappedPhase = false ;
-	    Options.path2UnwrappedPhase = DEFAULT_PATH2UNWRAPPEDPHASE ;
-	end
-
-	if  ~myisfield( Options, 'isUnwrappingIn2D' ) || isempty(Options.isUnwrappingIn2D)
-	    Options.isUnwrappingIn2D = DEFAULT_ISUNWRAPPINGIN2D;
-	end
-
-	if  ~myisfield( Options, 'isSavingNiftis' ) || isempty(Options.isSavingNiftis)
-	    Options.isSavingNiftis = DEFAULT_ISSAVINGNIFTIS;
-	end
-
-	[dataSaveDirectory,~,~] = fileparts( Options.path2UnwrappedPhase ) ;
-	dataSaveDirectory = [dataSaveDirectory '/'] ;
-
-	NiiOptions.voxelSize = Options.voxelSize ;
+	voxelSize = p.Results.voxelSize;
+	isUnwrappingIn2D = p.Results.isUnwrappingIn2D;
+	mask = p.Results.mask;
+	% Create a temp folder for working in.
+	tmpFldr = 'tmpPreludeFldr/' ;
+	system(['mkdir ' tmpFldr]) ;
 	
-	NiiOptions.filename  = [dataSaveDirectory 'rawPhase'] ;
-	nii( rawPhase, NiiOptions ) ;
+	save_nii( make_nii( rawPhase, voxelSize ), [tmpFldr 'rawPhase.nii'] ) ;
+
+	save_nii( make_nii( mag, voxelSize ), [tmpFldr 'mag.nii'] ) ;
 	
-	NiiOptions.filename  = [dataSaveDirectory 'mag'] ;
-	nii( mag, NiiOptions ) ;
-
-	Options.etc = ' ' ;
-
-	if Options.isUnwrappingIn2D
-		Options.etc   = ' -s ' ;
+	optionsEtc = '';
+	if isUnwrappingIn2D
+		optionsEtc = ' -s ' ;
 	end
 
-	if myisfield( Options, 'mask' )
-		NiiOptions.filename  = [dataSaveDirectory 'mask'] ;
-		nii( Options.mask, NiiOptions ) ;
+	if ~isempty(mask)
+		save_nii(make_nii(mask, voxelSize), [tmpFldr 'mask']) ;
 
-		Options.etc   = [ Options.etc ' -m ' dataSaveDirectory 'mask' ] ;
+		optionsEtc   = [ optionsEtc ' -m ' tmpFldr 'mask' ] ;
 	end
 
-	unwrapCommand = ['prelude -p ' dataSaveDirectory 'rawPhase' ...
-					 		' -a ' dataSaveDirectory 'mag' ...
-					 		' -o ' Options.path2UnwrappedPhase ...
-					 		' ' Options.etc] ; 
+	unwrapCommand = ['prelude -p ' tmpFldr 'rawPhase' ...
+					 		' -a ' tmpFldr 'mag' ...
+					 		' -o ' tmpFldr  'unwrappedPhase.nii.gz' ...
+					 		' ' optionsEtc] ; 
 
 	system(unwrapCommand) ;
 
-	system(['gunzip ' Options.path2UnwrappedPhase '.gz -df']) ;
+	unwrappedPhaseNII = load_nii([tmpFldr 'unwrappedPhase.nii.gz']);
 
-	unwrappedPhase = nii( Options.path2UnwrappedPhase ) ;
+	unwrappedPhase = double(unwrappedPhaseNII.img);
 
-	if ~Options.isSavingNiftis
-		delete( [dataSaveDirectory 'rawPhase.nii'], [dataSaveDirectory 'mag.nii'], ...
-				[dataSaveDirectory 'unwrappedPhase.nii'] ) ;
+	delete( [tmpFldr 'rawPhase.nii'], [tmpFldr 'mag.nii'], ...
+		[tmpFldr 'unwrappedPhase.nii'] ) ;
                 
-                if myisfield( Options, 'mask' )	
-                        delete( [dataSaveDirectory 'mask.nii'] ) ;
-                end
+    if ~isempty(mask)
+        delete( [tmpFldr 'mask.nii'] ) ;
     end
 end

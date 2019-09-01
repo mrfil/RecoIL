@@ -39,12 +39,14 @@ function[ mask, f, skull ] = bet(mag, varargin)
 
 DEFAULT_VOXELSIZE = [2 2 2] ;
 DEFAULT_F         = 0.5 ;
-DEFAULT_G         = 0 ;
+DEFAULT_G         = 0.0 ;
+
 %% check inputs
 
 if nargin < 1 || isempty(mag)
     error('Function requires at least 1 input.')
 end
+
 fValidationFcn = @(x) isscalar(x) && isnumeric(x) && (x <= 1) && (x>0);
 gValidationFcn = @(x) isscalar(x) && isnumeric(x) && (x <= 1);
 voxelSizeValidationFcn = @(x) ~isscalar(x) && (ndims(x) <= 3) && (ndims(x)>1);
